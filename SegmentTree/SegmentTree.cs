@@ -1,6 +1,13 @@
-﻿
+﻿using System;
+
 namespace SegmentTree
 {
+    public class Node
+    {
+        public int value;
+        public Range<int> range;
+    }
+
     public class SegmentTree
     {
         private int[] leafNodes;

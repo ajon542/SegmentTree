@@ -45,6 +45,7 @@
     <Compile Include="IGraph.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Range.cs" />
     <Compile Include="SegmentTree.cs" />
   </ItemGroup>
   <ItemGroup>
