@@ -49,5 +49,38 @@ namespace UnitTests
 
             CollectionAssert.AreEqual(expected, tree.GetTree());
         }
+
+        [TestMethod]
+        public void TestMethod5()
+        {
+            SegmentTree.SegmentTree tree = new SegmentTree.SegmentTree();
+            tree.Build(new int[] { 1, 2, 3, 4, 5 });
+
+            int[] expected = { -1, 15, 6, 9, 3, 3, 4, 5, 1, 2, 0, 0, 0, 0, 0, 0 };
+
+            CollectionAssert.AreEqual(expected, tree.GetTree());
+        }
+
+        [TestMethod]
+        public void TestMethod6()
+        {
+            SegmentTree.SegmentTree tree = new SegmentTree.SegmentTree();
+            tree.Build(new int[] { 1, 2, 3, 4, 5, 6 });
+
+            int[] expected = { -1, 21, 6, 15, 3, 3, 9, 6, 1, 2, 0, 0, 4, 5, 0, 0 };
+
+            CollectionAssert.AreEqual(expected, tree.GetTree());
+        }
+
+        [TestMethod]
+        public void TestMethod7()
+        {
+            SegmentTree.SegmentTree tree = new SegmentTree.SegmentTree();
+            tree.Build(new int[] { 1, 2, 3, 4, 5, 6, 7 });
+
+            int[] expected = { -1, 28, 10, 18, 3, 7, 11, 7, 1, 2, 3, 4, 5, 6, 0, 0 };
+
+            CollectionAssert.AreEqual(expected, tree.GetTree());
+        }
     }
 }
