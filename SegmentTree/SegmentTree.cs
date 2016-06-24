@@ -27,6 +27,11 @@ namespace SegmentTree
             UpdateInternalNodes();
         }
 
+        public void UpdateNode(int id, int value)
+        {
+            throw new NotImplementedException();
+        }
+
         private void PlaceLeafNodes(int l, int r, int childIndex)
         {
             if (l == r)
