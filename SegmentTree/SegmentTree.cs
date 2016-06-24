@@ -8,6 +8,11 @@ namespace SegmentTree
         public Range<int> range;
     }
 
+    /// <summary>
+    /// This segment tree implementation represents the sums of the child nodes.
+    /// The leaf nodes are the original input values. This data structure allows
+    /// for both update and query in O(logn) time.
+    /// </summary>
     public class SegmentTree
     {
         private int[] leafNodes;
@@ -27,7 +32,32 @@ namespace SegmentTree
             UpdateInternalNodes();
         }
 
+        /// <summary>
+        /// Updates the node with the given value.
+        /// </summary>
+        /// <param name="id">The id of the node to update.</param>
+        /// <param name="value">The new value for the node.</param>
         public void UpdateNode(int id, int value)
+        {
+            // Requirements:
+            // 1. The node must be accessible in constant time.
+            // 2. Must be able to determine the parent of any given node.
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// You are given an input array of values and the task
+        /// is to find the sum of the values between any given indices.
+        /// For example, the input array could be [1, 2, 3, 4, 5, 6, 7, 8]
+        /// and you are asked to find the sum between the indices 1 and 5.
+        /// The correct answer is (2 + 3 + 4 + 5 + 6) = 20. In the naive
+        /// approach you can simply iterate through all the values and obtain
+        /// the sum in O(n). However, the better approach is to use the
+        /// segment tree data structure which can perform in O(logn) time.
+        /// </summary>
+        /// <param name="node1"></param>
+        /// <param name="node2"></param>
+        public void QueryNodes(int node1, int node2)
         {
             throw new NotImplementedException();
         }
