@@ -6,7 +6,7 @@ namespace SegmentTree
         static void Main(string[] args)
         {
             SegmentTree tree = new SegmentTree();
-            tree.Build(new int[] { 1, 3, 5, 1, 2, 3, 3, 5, 6 });
+            tree.Build(new int[] { 1, 3, 5, 7, 9, 11 });
         }
     }
 }
