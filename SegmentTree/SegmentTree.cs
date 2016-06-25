@@ -145,12 +145,23 @@ namespace SegmentTree
         }
 
         /// <summary>
-        /// Calculates the parent node value.
+        /// Updates all the internal nodes based on the leaf nodes.
         /// </summary>
+        /// <remarks>
+        /// Interesting thing about this method is that it will only work once.
+        /// Initially, the internal nodes all have value 0. This is the identifier
+        /// for being able to update those nodes to their correct value based on
+        /// the leaf nodes.
+        /// TODO:
+        /// It would be nice to have a different indicator so this method
+        /// can be more general and can be called at any time to recalculate the
+        /// values in the segment tree.
+        /// </remarks>
         private void UpdateInternalNodes()
         {
             for (int i = tree.Length - 1; i > 0; --i)
             {
+                // Intially, the internal nodes have value zero.
                 if (tree[i].Node.Value == 0)
                 {
                     // Obtain the children nodes.
