@@ -60,6 +60,13 @@ namespace SegmentTree
         private RangeNode[] tree;
 
         /// <summary>
+        /// This dictionary keeps track of what index each node has in the tree.
+        /// By keeping track of this index, we can access the node in constant
+        /// time as well iterate through the parents up to the root.
+        /// </summary>
+        private Dictionary<int, int> nodeRef = new Dictionary<int, int>();
+
+        /// <summary>
         /// Build the segment tree from the given nodes.
         /// </summary>
         /// <param name="nodes">The list of nodes.</param>
@@ -130,9 +137,13 @@ namespace SegmentTree
         {
             if (l == r)
             {
+                // Add the leaf node into the tree.
                 Range<int> range = new Range<int> { Minimum = l, Maximum = r };
                 tree[childIndex].Node = leafNodes[l];
                 tree[childIndex].Range = range;
+
+                // Add the node id and index to the dictionary.
+                nodeRef.Add(leafNodes[l].Id, childIndex);
                 return;
             }
 
