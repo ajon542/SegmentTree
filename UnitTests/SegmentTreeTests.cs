@@ -18,7 +18,7 @@ namespace UnitTests
 
             int[] expected = { -1, 1 };
 
-            CollectionAssert.AreEqual(expected, tree.GetTree());
+            CollectionAssert.AreEqual(expected, tree.GetTreeNodeValues());
         }
 
         [TestMethod]
@@ -30,7 +30,7 @@ namespace UnitTests
 
             int[] expected = { -1, 3, 1, 2 };
 
-            CollectionAssert.AreEqual(expected, tree.GetTree());
+            CollectionAssert.AreEqual(expected, tree.GetTreeNodeValues());
         }
 
         [TestMethod]
@@ -42,7 +42,7 @@ namespace UnitTests
 
             int[] expected = { -1, 6, 3, 3, 1, 2, 0, 0 };
 
-            CollectionAssert.AreEqual(expected, tree.GetTree());
+            CollectionAssert.AreEqual(expected, tree.GetTreeNodeValues());
         }
 
         [TestMethod]
@@ -54,7 +54,7 @@ namespace UnitTests
 
             int[] expected = { -1, 10, 3, 7, 1, 2, 3, 4 };
 
-            CollectionAssert.AreEqual(expected, tree.GetTree());
+            CollectionAssert.AreEqual(expected, tree.GetTreeNodeValues());
         }
 
         [TestMethod]
@@ -66,7 +66,7 @@ namespace UnitTests
 
             int[] expected = { -1, 15, 6, 9, 3, 3, 4, 5, 1, 2, 0, 0, 0, 0, 0, 0 };
 
-            CollectionAssert.AreEqual(expected, tree.GetTree());
+            CollectionAssert.AreEqual(expected, tree.GetTreeNodeValues());
         }
 
         [TestMethod]
@@ -78,7 +78,7 @@ namespace UnitTests
 
             int[] expected = { -1, 21, 6, 15, 3, 3, 9, 6, 1, 2, 0, 0, 4, 5, 0, 0 };
 
-            CollectionAssert.AreEqual(expected, tree.GetTree());
+            CollectionAssert.AreEqual(expected, tree.GetTreeNodeValues());
         }
 
         [TestMethod]
@@ -90,7 +90,7 @@ namespace UnitTests
 
             int[] expected = { -1, 28, 10, 18, 3, 7, 11, 7, 1, 2, 3, 4, 5, 6, 0, 0 };
 
-            CollectionAssert.AreEqual(expected, tree.GetTree());
+            CollectionAssert.AreEqual(expected, tree.GetTreeNodeValues());
         }
     }
 }

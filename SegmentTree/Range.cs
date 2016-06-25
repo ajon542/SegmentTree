@@ -25,6 +25,10 @@ namespace SegmentTree
         /// </summary>
         public T Maximum { get; set; }
 
+        public Range() { }
+
+        public Range(T minimum, T maximum) { Minimum = minimum; Maximum = maximum; }
+
         /// <summary>
         /// Presents the Range in readable format
         /// </summary>

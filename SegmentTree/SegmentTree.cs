@@ -241,8 +241,8 @@ namespace SegmentTree
         /// <summary>
         /// This method is for unit testing only.
         /// </summary>
-        /// <returns>The internal tree structure.</returns>
-        public int[] GetTree()
+        /// <returns>The internal tree node values.</returns>
+        public int[] GetTreeNodeValues()
         {
             int[] nodeValues = new int[tree.Length];
             for (int i = 0; i < tree.Length; ++i)
@@ -250,6 +250,20 @@ namespace SegmentTree
                 nodeValues[i] = tree[i].Node.Value;
             }
             return nodeValues;
+        }
+
+        /// <summary>
+        /// This method is for unit testing only.
+        /// </summary>
+        /// <returns>The internal tree node ranges.</returns>
+        public Range<int>[] GetTreeNodeRanges()
+        {
+            Range<int>[] nodeRanges = new Range<int>[tree.Length];
+            for (int i = 0; i < tree.Length; ++i)
+            {
+                nodeRanges[i] = tree[i].Range;
+            }
+            return nodeRanges;
         }
     }
 }
