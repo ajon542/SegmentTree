@@ -22,6 +22,6 @@ namespace SegmentTree
         /// Presents the Node in readable format
         /// </summary>
         /// <returns>String representation of the Range</returns>
-        public override string ToString() { return String.Format("[{0}: {1}]", Id, Value); }
+        public override string ToString() { return String.Format("[{0}]", Value); }
     }
 }

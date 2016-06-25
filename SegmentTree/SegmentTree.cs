@@ -43,25 +43,44 @@ namespace SegmentTree
             /// Each node in the tree contains a range which is used in a query.
             /// </summary>
             public Range<int> Range { get; set; }
+
+            /// <summary>
+            /// Presents the Range in readable format
+            /// </summary>
+            /// <returns>String representation of the Range</returns>
+            public override string ToString() 
+            {
+                return String.Format("{0}: {1}",
+                    (Node == null) ? "null" : Node.ToString(),
+                    (Range == null) ? "null" : Range.ToString()); 
+            }
         }
 
         private List<Node<int>> leafNodes;
-        private int[] tree;
+        private RangeNode[] tree;
 
-        public void Build(List<Node<int>> values)
+        /// <summary>
+        /// Build the segment tree from the given nodes.
+        /// </summary>
+        /// <param name="nodes">The list of nodes.</param>
+        public void Build(List<Node<int>> nodes)
         {
             // Requuirements:
-            // 1. The user must provide an identifier for the node.
+            // 1. The user must provide an identifier for the node. DONE.
             // 2. The user must provide the identifier when doing an update or query for nodes.
 
-            leafNodes = values;
+            leafNodes = nodes;
 
             // Calculate the space required to hold all the nodes in the tree.
             int nodeCount = 2 * NextPowerOfTwo(leafNodes.Count);
-            tree = new int[nodeCount];
+            tree = new RangeNode[nodeCount];
+            for(int i = 0; i < nodeCount; ++i)
+            {
+                tree[i] = new RangeNode { Node = new Node<int> { Value = 0 } };
+            }
 
             int currentIndex = 1;
-            tree[0] = -1;
+            tree[0].Node.Value = -1;
             PlaceLeafNodes(0, leafNodes.Count - 1, currentIndex);
             UpdateInternalNodes();
         }
@@ -107,7 +126,9 @@ namespace SegmentTree
         {
             if (l == r)
             {
-                tree[childIndex] = leafNodes[l].Value;
+                Range<int> range = new Range<int> { Minimum = l, Maximum = r };
+                tree[childIndex].Node = leafNodes[l];
+                tree[childIndex].Range = range;
                 return;
             }
 
@@ -127,10 +148,10 @@ namespace SegmentTree
         {
             for (int i = tree.Length - 1; i > 0; --i)
             {
-                if (tree[i] == 0)
+                if (tree[i].Node.Value == 0)
                 {
-                    tree[i] += Left(i);
-                    tree[i] += Right(i);
+                    tree[i].Node.Value += Left(i);
+                    tree[i].Node.Value += Right(i);
                 }
             }
         }
@@ -145,7 +166,7 @@ namespace SegmentTree
             int childIndex = node << 1;
             if (childIndex < tree.Length)
             {
-                return tree[childIndex];
+                return tree[childIndex].Node.Value;
             }
             return 0;
         }
@@ -160,7 +181,7 @@ namespace SegmentTree
             int childIndex = (node << 1) + 1;
             if (childIndex < tree.Length)
             {
-                return tree[childIndex];
+                return tree[childIndex].Node.Value;
             }
             return 0;
         }
@@ -192,7 +213,12 @@ namespace SegmentTree
         /// <returns>The internal tree structure.</returns>
         public int[] GetTree()
         {
-            return tree;
+            int[] nodeValues = new int[tree.Length];
+            for (int i = 0; i < tree.Length; ++i)
+            {
+                nodeValues[i] = tree[i].Node.Value;
+            }
+            return nodeValues;
         }
     }
 }
