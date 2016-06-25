@@ -13,7 +13,7 @@ namespace SegmentTree
         {
             int id = 0;
             List<Node<int>> nodes = new List<Node<int>>();
-            foreach(int value in values)
+            foreach (int value in values)
             {
                 Node<int> node = new Node<int> { Id = id++, Value = value };
                 nodes.Add(node);
@@ -48,11 +48,11 @@ namespace SegmentTree
             /// Presents the Range in readable format
             /// </summary>
             /// <returns>String representation of the Range</returns>
-            public override string ToString() 
+            public override string ToString()
             {
                 return String.Format("{0}: {1}",
                     (Node == null) ? "null" : Node.ToString(),
-                    (Range == null) ? "null" : Range.ToString()); 
+                    (Range == null) ? "null" : Range.ToString());
             }
         }
 
@@ -74,9 +74,13 @@ namespace SegmentTree
             // Calculate the space required to hold all the nodes in the tree.
             int nodeCount = 2 * NextPowerOfTwo(leafNodes.Count);
             tree = new RangeNode[nodeCount];
-            for(int i = 0; i < nodeCount; ++i)
+            for (int i = 0; i < nodeCount; ++i)
             {
-                tree[i] = new RangeNode { Node = new Node<int> { Value = 0 } };
+                tree[i] = new RangeNode
+                {
+                    Node = new Node<int> { Value = 0 },
+                    Range = new Range<int>()
+                };
             }
 
             int currentIndex = 1;
@@ -142,7 +146,6 @@ namespace SegmentTree
 
         /// <summary>
         /// Calculates the parent node value.
-        /// The parent node value is the sum of the two child nodes.
         /// </summary>
         private void UpdateInternalNodes()
         {
@@ -150,8 +153,25 @@ namespace SegmentTree
             {
                 if (tree[i].Node.Value == 0)
                 {
-                    tree[i].Node.Value += Left(i);
-                    tree[i].Node.Value += Right(i);
+                    // Obtain the children nodes.
+                    RangeNode lNode = Left(i);
+                    RangeNode rNode = Right(i);
+
+                    // Update the current node based on the values of the children.
+                    // The current node has a value which is the sum of the two children.
+                    // The range of the parent node is the minimum of the left child and
+                    // the maximum of the right child.
+                    if (lNode != null)
+                    {
+                        tree[i].Node.Value += lNode.Node.Value;
+                        tree[i].Range.Minimum = lNode.Range.Minimum;
+                    }
+
+                    if (rNode != null)
+                    {
+                        tree[i].Node.Value += rNode.Node.Value;
+                        tree[i].Range.Maximum = rNode.Range.Maximum;
+                    }
                 }
             }
         }
@@ -160,30 +180,30 @@ namespace SegmentTree
         /// Get the value of the left child node.
         /// </summary>
         /// <param name="node">The parent node.</param>
-        /// <returns>The value of the left child node, or zero if not in range.</returns>
-        private int Left(int node)
+        /// <returns>The value of the left child node, or null if not in range.</returns>
+        private RangeNode Left(int node)
         {
             int childIndex = node << 1;
             if (childIndex < tree.Length)
             {
-                return tree[childIndex].Node.Value;
+                return tree[childIndex];
             }
-            return 0;
+            return null;
         }
 
         /// <summary>
         /// Get the value of the right child node.
         /// </summary>
         /// <param name="node">The parent node.</param>
-        /// <returns>The value of the right child node, or zero if not in range.</returns>
-        private int Right(int node)
+        /// <returns>The value of the right child node, or null if not in range.</returns>
+        private RangeNode Right(int node)
         {
             int childIndex = (node << 1) + 1;
             if (childIndex < tree.Length)
             {
-                return tree[childIndex].Node.Value;
+                return tree[childIndex];
             }
-            return 0;
+            return null;
         }
 
         /// <summary>
