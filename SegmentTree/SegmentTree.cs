@@ -4,6 +4,7 @@ namespace SegmentTree
 {
     public class Node
     {
+        public int id;
         public int value;
         public Range<int> range;
     }
@@ -42,6 +43,13 @@ namespace SegmentTree
             // Requirements:
             // 1. The node must be accessible in constant time.
             // 2. Must be able to determine the parent of any given node.
+            //
+            // An interesting thing is the id given to the node. Externally,
+            // the user knows nothing about the id as it only passes in the
+            // different nodes. How can we propagate this information?
+            // We could make the rule such that the calling class should create
+            // the ids. If they don't do this, we must at least give them back
+            // some sort of id for them to use.
             throw new NotImplementedException();
         }
 
