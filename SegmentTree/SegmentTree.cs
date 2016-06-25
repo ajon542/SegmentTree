@@ -3,26 +3,6 @@
 namespace SegmentTree
 {
     /// <summary>
-    /// This represents a node. The user will supply a list of nodes
-    /// from which the segment tree is to be built.
-    /// </summary>
-    public class Node
-    {
-        /// <summary>
-        /// The node identifier.
-        /// </summary>
-        /// <remarks>
-        /// The user should ensure these values are unique.
-        /// </remarks>
-        public int Id { get; set; }
-
-        /// <summary>
-        /// The value of the node.
-        /// </summary>
-        public int Value { get; set; }
-    }
-
-    /// <summary>
     /// This segment tree implementation represents the sums of the child nodes.
     /// The leaf nodes are the original input values. This data structure allows
     /// for both update and query in O(logn) time.
@@ -37,7 +17,7 @@ namespace SegmentTree
             /// <summary>
             /// The node.
             /// </summary>
-            public Node Node { get; set; }
+            public Node<int> Node { get; set; }
 
             /// <summary>
             /// Each node in the tree contains a range which is used in a query.
