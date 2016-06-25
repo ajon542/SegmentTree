@@ -1,4 +1,5 @@
-﻿
+﻿using System.Collections.Generic;
+
 namespace SegmentTree
 {
     class Program
@@ -6,7 +7,10 @@ namespace SegmentTree
         static void Main(string[] args)
         {
             SegmentTree tree = new SegmentTree();
-            tree.Build(new int[] { 1, 3, 5, 7, 9, 11 });
+
+            List<Node<int>> nodes = Converter.Convert(new List<int> { 1, 3, 5, 7, 9, 11 });
+
+            tree.Build(nodes);
         }
     }
 }

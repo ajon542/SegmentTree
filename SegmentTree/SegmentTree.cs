@@ -1,7 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SegmentTree
 {
+    /// <summary>
+    /// This converts a list of ints to a list of nodes with an incrementing id number starting from 0.
+    /// </summary>
+    /// TODO: There is probably a much better name for this.
+    public static class Converter
+    {
+        public static List<Node<int>> Convert(List<int> values)
+        {
+            int id = 0;
+            List<Node<int>> nodes = new List<Node<int>>();
+            foreach(int value in values)
+            {
+                Node<int> node = new Node<int> { Id = id++, Value = value };
+                nodes.Add(node);
+            }
+            return nodes;
+        }
+    }
+
     /// <summary>
     /// This segment tree implementation represents the sums of the child nodes.
     /// The leaf nodes are the original input values. This data structure allows
@@ -25,10 +45,10 @@ namespace SegmentTree
             public Range<int> Range { get; set; }
         }
 
-        private int[] leafNodes;
+        private List<Node<int>> leafNodes;
         private int[] tree;
 
-        public void Build(int[] values)
+        public void Build(List<Node<int>> values)
         {
             // Requuirements:
             // 1. The user must provide an identifier for the node.
@@ -37,12 +57,12 @@ namespace SegmentTree
             leafNodes = values;
 
             // Calculate the space required to hold all the nodes in the tree.
-            int nodeCount = 2 * NextPowerOfTwo(leafNodes.Length);
+            int nodeCount = 2 * NextPowerOfTwo(leafNodes.Count);
             tree = new int[nodeCount];
 
             int currentIndex = 1;
             tree[0] = -1;
-            PlaceLeafNodes(0, leafNodes.Length - 1, currentIndex);
+            PlaceLeafNodes(0, leafNodes.Count - 1, currentIndex);
             UpdateInternalNodes();
         }
 
@@ -87,7 +107,7 @@ namespace SegmentTree
         {
             if (l == r)
             {
-                tree[childIndex] = leafNodes[l];
+                tree[childIndex] = leafNodes[l].Value;
                 return;
             }
 
