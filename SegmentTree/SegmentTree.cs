@@ -2,11 +2,24 @@
 
 namespace SegmentTree
 {
+    /// <summary>
+    /// This represents a node. The user will supply a list of nodes
+    /// from which the segment tree is to be built.
+    /// </summary>
     public class Node
     {
-        public int id;
-        public int value;
-        public Range<int> range;
+        /// <summary>
+        /// The node identifier.
+        /// </summary>
+        /// <remarks>
+        /// The user should ensure these values are unique.
+        /// </remarks>
+        public int Id { get; set; }
+
+        /// <summary>
+        /// The value of the node.
+        /// </summary>
+        public int Value { get; set; }
     }
 
     /// <summary>
@@ -16,11 +29,31 @@ namespace SegmentTree
     /// </summary>
     public class SegmentTree
     {
+        /// <summary>
+        /// Internal node representation.
+        /// </summary>
+        private class RangeNode
+        {
+            /// <summary>
+            /// The node.
+            /// </summary>
+            public Node Node { get; set; }
+
+            /// <summary>
+            /// Each node in the tree contains a range which is used in a query.
+            /// </summary>
+            public Range<int> Range { get; set; }
+        }
+
         private int[] leafNodes;
         private int[] tree;
 
         public void Build(int[] values)
         {
+            // Requuirements:
+            // 1. The user must provide an identifier for the node.
+            // 2. The user must provide the identifier when doing an update or query for nodes.
+
             leafNodes = values;
 
             // Calculate the space required to hold all the nodes in the tree.
