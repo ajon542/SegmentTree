@@ -106,14 +106,19 @@ namespace SegmentTree
             // Requirements:
             // 1. The node must be accessible in constant time.
             // 2. Must be able to determine the parent of any given node.
-            //
-            // An interesting thing is the id given to the node. Externally,
-            // the user knows nothing about the id as it only passes in the
-            // different nodes. How can we propagate this information?
-            // We could make the rule such that the calling class should create
-            // the ids. If they don't do this, we must at least give them back
-            // some sort of id for them to use.
-            throw new NotImplementedException();
+
+            // Obtain the index of the node in the tree.
+            int treeIndex = nodeRef[id];
+
+            // Calculate the difference between old and new value.
+            int diff = tree[treeIndex].Node.Value - value;
+
+            // Update values of all parent nodes up to root.
+            while (treeIndex != 0)
+            {
+                tree[treeIndex].Node.Value -= diff;
+                treeIndex = Parent(treeIndex);
+            }
         }
 
         /// <summary>
@@ -196,6 +201,16 @@ namespace SegmentTree
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Get the index of the parent node.
+        /// </summary>
+        /// <param name="node">The child node.</param>
+        /// <returns>The index of the parent node.</returns>
+        private int Parent(int node)
+        {
+            return node >> 1;
         }
 
         /// <summary>

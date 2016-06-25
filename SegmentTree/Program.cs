@@ -11,6 +11,8 @@ namespace SegmentTree
             List<Node<int>> nodes = Converter.Convert(new List<int> { 1, 3, 5, 7, 9, 11 });
 
             tree.Build(nodes);
+
+            tree.UpdateNode(0, 10);
         }
     }
 }
