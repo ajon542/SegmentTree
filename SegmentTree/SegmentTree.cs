@@ -4,25 +4,6 @@ using System.Collections.Generic;
 namespace SegmentTree
 {
     /// <summary>
-    /// This converts a list of ints to a list of nodes with an incrementing id number starting from 0.
-    /// </summary>
-    /// TODO: There is probably a much better name for this.
-    public static class Converter
-    {
-        public static List<Node<int>> Convert(List<int> values)
-        {
-            int id = 0;
-            List<Node<int>> nodes = new List<Node<int>>();
-            foreach (int value in values)
-            {
-                Node<int> node = new Node<int> { Id = id++, Value = value };
-                nodes.Add(node);
-            }
-            return nodes;
-        }
-    }
-
-    /// <summary>
     /// This segment tree implementation represents the sums of the child nodes.
     /// The leaf nodes are the original input values. This data structure allows
     /// for both update and query in O(logn) time.
@@ -56,7 +37,7 @@ namespace SegmentTree
             }
         }
 
-        private List<Node<int>> leafNodes;
+        private List<int> leafNodes;
         private RangeNode[] tree;
 
         /// <summary>
@@ -70,12 +51,8 @@ namespace SegmentTree
         /// Build the segment tree from the given nodes.
         /// </summary>
         /// <param name="nodes">The list of nodes.</param>
-        public void Build(List<Node<int>> nodes)
+        public void Build(List<int> nodes)
         {
-            // Requirements:
-            // 1. The user must provide an identifier for the node. DONE.
-            // 2. The user must provide the identifier when doing an update or query for nodes.
-
             leafNodes = nodes;
 
             // Calculate the space required to hold all the nodes in the tree.
@@ -122,6 +99,7 @@ namespace SegmentTree
 
             // TODO: We could do this another way, by searching from the root
             // and only updating nodes if the index lies within that particular range.
+            // This would allow us to remove the nodeRef structure.
         }
 
         /// <summary>
@@ -134,12 +112,15 @@ namespace SegmentTree
         /// the sum in O(n). However, the better approach is to use the
         /// segment tree data structure which can perform in O(logn) time.
         /// </summary>
-        /// <param name="id1"></param>
-        /// <param name="id2"></param>
-        public int QueryNodes(int node, int l, int r)
+        /// <param name="range">The range for the query.</param>
+        public int QueryNodes(Range<int> range)
         {
-            // TODO: This kind of assumes the ids are based on their original indices.
-            Range<int> range = new Range<int>(l, r);
+            int rootNode = 1;
+            return QueryNodes(rootNode, range);
+        }
+
+        private int QueryNodes(int node, Range<int> range)
+        {
             if (tree[node].Range.IsInsideRange(range))
             {
                 return tree[node].Node.Value;
@@ -149,7 +130,9 @@ namespace SegmentTree
                 return 0;
             }
 
-            return QueryNodes(node << 1, l, r) + QueryNodes((node << 1) + 1, l, r);
+            int lChild = node << 1;
+            int rChild = (node << 1) + 1;
+            return QueryNodes(lChild, range) + QueryNodes(rChild, range);
         }
 
         private void PlaceLeafNodes(int l, int r, int childIndex)
@@ -158,11 +141,11 @@ namespace SegmentTree
             {
                 // Add the leaf node into the tree.
                 Range<int> range = new Range<int> { Minimum = l, Maximum = r };
-                tree[childIndex].Node = leafNodes[l];
+                tree[childIndex].Node.Value = leafNodes[l];
                 tree[childIndex].Range = range;
 
                 // Add the node id and index to the dictionary.
-                nodeRef.Add(leafNodes[l].Id, childIndex);
+                nodeRef.Add(l, childIndex);
                 return;
             }
 

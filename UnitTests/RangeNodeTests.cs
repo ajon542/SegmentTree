@@ -13,8 +13,7 @@ namespace UnitTests
         public void TestMethod1()
         {
             SegmentTree.SegmentTree tree = new SegmentTree.SegmentTree();
-            List<Node<int>> nodes = Converter.Convert(new List<int> { 1 });
-            tree.Build(nodes);
+            tree.Build(new List<int> { 1 });
 
             Range<int>[] expected =
             {
@@ -31,8 +30,7 @@ namespace UnitTests
         public void TestMethod2()
         {
             SegmentTree.SegmentTree tree = new SegmentTree.SegmentTree();
-            List<Node<int>> nodes = Converter.Convert(new List<int> { 1, 2 });
-            tree.Build(nodes);
+            tree.Build(new List<int> { 1, 2 });
 
             Range<int>[] expected = 
             {
@@ -51,8 +49,7 @@ namespace UnitTests
         public void TestMethod3()
         {
             SegmentTree.SegmentTree tree = new SegmentTree.SegmentTree();
-            List<Node<int>> nodes = Converter.Convert(new List<int> { 1, 2, 3 });
-            tree.Build(nodes);
+            tree.Build(new List<int> { 1, 2, 3 });
 
             Range<int>[] expected = 
             {
@@ -75,8 +72,7 @@ namespace UnitTests
         public void TestMethod4()
         {
             SegmentTree.SegmentTree tree = new SegmentTree.SegmentTree();
-            List<Node<int>> nodes = Converter.Convert(new List<int> { 1, 2, 3, 4 });
-            tree.Build(nodes);
+            tree.Build(new List<int> { 1, 2, 3, 4 });
 
             Range<int>[] expected = 
             {
@@ -99,8 +95,7 @@ namespace UnitTests
         public void TestMethod5()
         {
             SegmentTree.SegmentTree tree = new SegmentTree.SegmentTree();
-            List<Node<int>> nodes = Converter.Convert(new List<int> { 1, 2, 3, 4, 5 });
-            tree.Build(nodes);
+            tree.Build(new List<int> { 1, 2, 3, 4, 5 });
 
             Range<int>[] expected = 
             {
