@@ -139,31 +139,26 @@ namespace SegmentTree
             }
 
             // Visit the left and right children.
-            int lChild = node << 1;
-            int rChild = (node << 1) + 1;
-            return QueryNodes(lChild, range) + QueryNodes(rChild, range);
+            return QueryNodes(Left(node), range) + QueryNodes(Right(node), range);
         }
 
-        private void PlaceLeafNodes(int l, int r, int childIndex)
+        private void PlaceLeafNodes(int l, int r, int node)
         {
             if (l == r)
             {
                 // Add the leaf node into the tree.
-                Range<int> range = new Range<int> { Minimum = l, Maximum = r };
-                tree[childIndex].Node.Value = leafNodes[l];
-                tree[childIndex].Range = range;
+                tree[node].Node.Value = leafNodes[l];
+                tree[node].Range.Minimum = l;
+                tree[node].Range.Maximum = r;
 
                 // Add the node id and index to the dictionary.
-                nodeRef.Add(l, childIndex);
+                nodeRef.Add(l, node);
                 return;
             }
 
             int m = (l + r) / 2;
-            int lChildIndex = childIndex << 1;
-            int rChildIndex = lChildIndex + 1;
-
-            PlaceLeafNodes(l, m, lChildIndex);
-            PlaceLeafNodes(m + 1, r, rChildIndex);
+            PlaceLeafNodes(l, m, Left(node));
+            PlaceLeafNodes(m + 1, r, Right(node));
         }
 
         /// <summary>
@@ -187,8 +182,8 @@ namespace SegmentTree
                 if (tree[i].Node.Value == 0)
                 {
                     // Obtain the children nodes.
-                    RangeNode lNode = Left(i);
-                    RangeNode rNode = Right(i);
+                    RangeNode lNode = LeftNode(i);
+                    RangeNode rNode = RightNode(i);
 
                     // Update the current node based on the values of the children.
                     // The current node has a value which is the sum of the two children.
@@ -209,14 +204,19 @@ namespace SegmentTree
             }
         }
 
-        /// <summary>
-        /// Get the index of the parent node.
-        /// </summary>
-        /// <param name="node">The child node.</param>
-        /// <returns>The index of the parent node.</returns>
         private int Parent(int node)
         {
             return node >> 1;
+        }
+
+        private int Left(int node)
+        {
+            return node << 1;
+        }
+
+        private int Right(int node)
+        {
+            return (node << 1) + 1;
         }
 
         /// <summary>
@@ -224,9 +224,9 @@ namespace SegmentTree
         /// </summary>
         /// <param name="node">The parent node.</param>
         /// <returns>The value of the left child node, or null if not in range.</returns>
-        private RangeNode Left(int node)
+        private RangeNode LeftNode(int node)
         {
-            int childIndex = node << 1;
+            int childIndex = Left(node);
             if (childIndex < tree.Length)
             {
                 return tree[childIndex];
@@ -239,9 +239,9 @@ namespace SegmentTree
         /// </summary>
         /// <param name="node">The parent node.</param>
         /// <returns>The value of the right child node, or null if not in range.</returns>
-        private RangeNode Right(int node)
+        private RangeNode RightNode(int node)
         {
-            int childIndex = (node << 1) + 1;
+            int childIndex = Right(node);
             if (childIndex < tree.Length)
             {
                 return tree[childIndex];
