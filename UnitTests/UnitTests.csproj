@@ -50,6 +50,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="QueryNodeTests.cs" />
     <Compile Include="RangeNodeTests.cs" />
     <Compile Include="SegmentTreeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
