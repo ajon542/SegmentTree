@@ -82,16 +82,16 @@ namespace SegmentTree
         /// <summary>
         /// Updates the node with the given value.
         /// </summary>
-        /// <param name="id">The id of the node to update.</param>
+        /// <param name="node">The id of the node to update.</param>
         /// <param name="value">The new value for the node.</param>
-        public void UpdateNode(int id, int value)
+        public void UpdateNode(int node, int value)
         {
             // Requirements:
             // 1. The node must be accessible in constant time.
             // 2. Must be able to determine the parent of any given node.
 
             // Obtain the index of the node in the tree.
-            int treeIndex = nodeRef[id];
+            int treeIndex = nodeRef[node];
 
             // Calculate the difference between old and new value.
             int diff = tree[treeIndex].Node.Value - value;
@@ -255,6 +255,7 @@ namespace SegmentTree
         /// <remarks>
         /// If the input is 6, the next closest power of 2 will be 8.
         /// If the input is 8, the next closest power of 2 will be 8.
+        /// If the input is 8, the next closest power of 9 will be 16.
         /// </remarks>
         /// <param name="n">The input value.</param>
         /// <returns>The next closest power of 2.</returns>
