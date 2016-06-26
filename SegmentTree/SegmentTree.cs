@@ -72,7 +72,7 @@ namespace SegmentTree
         /// <param name="nodes">The list of nodes.</param>
         public void Build(List<Node<int>> nodes)
         {
-            // Requuirements:
+            // Requirements:
             // 1. The user must provide an identifier for the node. DONE.
             // 2. The user must provide the identifier when doing an update or query for nodes.
 
@@ -119,6 +119,9 @@ namespace SegmentTree
                 tree[treeIndex].Node.Value -= diff;
                 treeIndex = Parent(treeIndex);
             }
+
+            // TODO: We could do this another way, by searching from the root
+            // and only updating nodes if the index lies within that particular range.
         }
 
         /// <summary>
@@ -131,11 +134,22 @@ namespace SegmentTree
         /// the sum in O(n). However, the better approach is to use the
         /// segment tree data structure which can perform in O(logn) time.
         /// </summary>
-        /// <param name="node1"></param>
-        /// <param name="node2"></param>
-        public void QueryNodes(int node1, int node2)
+        /// <param name="id1"></param>
+        /// <param name="id2"></param>
+        public int QueryNodes(int node, int l, int r)
         {
-            throw new NotImplementedException();
+            // TODO: This kind of assumes the ids are based on their original indices.
+            Range<int> range = new Range<int>(l, r);
+            if (tree[node].Range.IsInsideRange(range))
+            {
+                return tree[node].Node.Value;
+            }
+            else if (range.Maximum < tree[node].Range.Minimum || range.Minimum > tree[node].Range.Maximum)
+            {
+                return 0;
+            }
+
+            return QueryNodes(node << 1, l, r) + QueryNodes((node << 1) + 1, l, r);
         }
 
         private void PlaceLeafNodes(int l, int r, int childIndex)
