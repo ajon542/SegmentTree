@@ -17,7 +17,7 @@ namespace UnitTests
 
             Range<int>[] expected =
             {
-                new Range<int>(0, 0), // -1
+                new Range<int>(-1, -1), // -1
                 new Range<int>(0, 0), //  1
             };
 
@@ -34,7 +34,7 @@ namespace UnitTests
 
             Range<int>[] expected = 
             {
-                new Range<int>(0, 0), // -1
+                new Range<int>(-1, -1), // -1
                 new Range<int>(0, 1), //  3
                 new Range<int>(0, 0), //  1
                 new Range<int>(1, 1), //  2
@@ -53,14 +53,14 @@ namespace UnitTests
 
             Range<int>[] expected = 
             {
-                new Range<int>(0, 0), // -1
+                new Range<int>(-1, -1), // -1
                 new Range<int>(0, 2), //  6
                 new Range<int>(0, 1), //  3
                 new Range<int>(2, 2), //  3
                 new Range<int>(0, 0), //  1
                 new Range<int>(1, 1), //  2
-                new Range<int>(0, 0), //  0
-                new Range<int>(0, 0), //  0
+                new Range<int>(-1, -1), //  0
+                new Range<int>(-1, -1), //  0
             };
 
             Range<int>[] actual = tree.GetTreeNodeRanges();
@@ -76,7 +76,7 @@ namespace UnitTests
 
             Range<int>[] expected = 
             {
-                new Range<int>(0, 0), // -1
+                new Range<int>(-1, -1), // -1
                 new Range<int>(0, 3), // 10
                 new Range<int>(0, 1), //  3
                 new Range<int>(2, 3), //  7
@@ -99,7 +99,7 @@ namespace UnitTests
 
             Range<int>[] expected = 
             {
-                new Range<int>(0, 0), // -1
+                new Range<int>(-1, -1), // -1
                 new Range<int>(0, 4), // 15
                 new Range<int>(0, 2), //  6
                 new Range<int>(3, 4), //  9
@@ -109,12 +109,12 @@ namespace UnitTests
                 new Range<int>(4, 4), //  5
                 new Range<int>(0, 0), //  1
                 new Range<int>(1, 1), //  2
-                new Range<int>(0, 0),
-                new Range<int>(0, 0),
-                new Range<int>(0, 0),
-                new Range<int>(0, 0),
-                new Range<int>(0, 0),
-                new Range<int>(0, 0),
+                new Range<int>(-1, -1),
+                new Range<int>(-1, -1),
+                new Range<int>(-1, -1),
+                new Range<int>(-1, -1),
+                new Range<int>(-1, -1),
+                new Range<int>(-1, -1),
             };
 
             Range<int>[] actual = tree.GetTreeNodeRanges();

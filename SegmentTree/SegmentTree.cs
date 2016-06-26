@@ -30,7 +30,7 @@ namespace SegmentTree
             public RangeNode()
             {
                 Node = new Node<int>();
-                Range = new Range<int>();
+                Range = new Range<int>(-1, -1);
             }
 
             /// <summary>
@@ -49,13 +49,6 @@ namespace SegmentTree
 
         private List<int> leafNodes;
         private RangeNode[] tree;
-
-        /// <summary>
-        /// This dictionary keeps track of what index each node has in the tree.
-        /// By keeping track of this index, we can access the node in constant
-        /// time as well iterate through the parents up to the root.
-        /// </summary>
-        private Dictionary<int, int> nodeRef = new Dictionary<int, int>();
 
         /// <summary>
         /// Build the segment tree from the given nodes.
@@ -86,26 +79,24 @@ namespace SegmentTree
         /// <param name="value">The new value for the node.</param>
         public void UpdateNode(int node, int value)
         {
-            // Requirements:
-            // 1. The node must be accessible in constant time.
-            // 2. Must be able to determine the parent of any given node.
+            UpdateNode(node, 1, value);
+        }
 
-            // Obtain the index of the node in the tree.
-            int treeIndex = nodeRef[node];
-
-            // Calculate the difference between old and new value.
-            int diff = tree[treeIndex].Node.Value - value;
-
-            // Update values of all parent nodes up to root.
-            while (treeIndex != 0)
+        private void UpdateNode(int node, int currentNode, int value)
+        {
+            if (currentNode < 0 || currentNode >= tree.Length)
             {
-                tree[treeIndex].Node.Value -= diff;
-                treeIndex = Parent(treeIndex);
+                return;
             }
 
-            // TODO: We could do this another way, by searching from the root
-            // and only updating nodes if the index lies within that particular range.
-            // This would allow us to remove the nodeRef structure.
+            if (tree[currentNode].Range.ContainsValue(node))
+            {
+                int diff = leafNodes[node] - value;
+                tree[currentNode].Node.Value -= diff;
+            }
+
+            UpdateNode(node, Left(currentNode), value);
+            UpdateNode(node, Right(currentNode), value);
         }
 
         /// <summary>
@@ -150,9 +141,6 @@ namespace SegmentTree
                 tree[node].Node.Value = leafNodes[l];
                 tree[node].Range.Minimum = l;
                 tree[node].Range.Maximum = r;
-
-                // Add the node id and index to the dictionary.
-                nodeRef.Add(l, node);
                 return;
             }
 
