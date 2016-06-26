@@ -127,15 +127,18 @@ namespace SegmentTree
 
         private int QueryNodes(int node, Range<int> range)
         {
+            // If the current node is inside the given range.
             if (tree[node].Range.IsInsideRange(range))
             {
                 return tree[node].Node.Value;
             }
+            // Else If the current node is completely outside the given range.
             else if (range.Maximum < tree[node].Range.Minimum || range.Minimum > tree[node].Range.Maximum)
             {
                 return 0;
             }
 
+            // Visit the left and right children.
             int lChild = node << 1;
             int rChild = (node << 1) + 1;
             return QueryNodes(lChild, range) + QueryNodes(rChild, range);
