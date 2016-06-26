@@ -10,6 +10,8 @@ namespace SegmentTree
     /// </summary>
     public class SegmentTree
     {
+        #region Private RangeNode Class.
+
         /// <summary>
         /// Internal node representation.
         /// </summary>
@@ -25,6 +27,12 @@ namespace SegmentTree
             /// </summary>
             public Range<int> Range { get; set; }
 
+            public RangeNode()
+            {
+                Node = new Node<int>();
+                Range = new Range<int>();
+            }
+
             /// <summary>
             /// Presents the Range in readable format
             /// </summary>
@@ -36,6 +44,8 @@ namespace SegmentTree
                     (Range == null) ? "null" : Range.ToString());
             }
         }
+
+        #endregion
 
         private List<int> leafNodes;
         private RangeNode[] tree;
@@ -60,11 +70,7 @@ namespace SegmentTree
             tree = new RangeNode[nodeCount];
             for (int i = 0; i < nodeCount; ++i)
             {
-                tree[i] = new RangeNode
-                {
-                    Node = new Node<int> { Value = 0 },
-                    Range = new Range<int>()
-                };
+                tree[i] = new RangeNode();
             }
 
             int currentIndex = 1;
