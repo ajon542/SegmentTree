@@ -25,15 +25,23 @@ namespace SegmentTree
         /// </summary>
         public T Maximum { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Range"/> class.
+        /// </summary>
         public Range() { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Range"/> class.
+        /// </summary>
+        /// <param name="minimum">The minimum value in the range.</param>
+        /// <param name="maximum">The maximum value in the range.</param>
         public Range(T minimum, T maximum) { Minimum = minimum; Maximum = maximum; }
 
         /// <summary>
         /// Presents the Range in readable format
         /// </summary>
         /// <returns>String representation of the Range</returns>
-        public override string ToString() { return String.Format("[{0} - {1}]", Minimum, Maximum); }
+        public override string ToString() { return String.Format("[{0}, {1}]", Minimum, Maximum); }
 
         /// <summary>
         /// Determines if the range is valid

@@ -10,43 +10,6 @@ namespace SegmentTree
     /// </summary>
     public class SegmentTree
     {
-        #region Private RangeNode Class.
-
-        /// <summary>
-        /// Internal node representation.
-        /// </summary>
-        private class RangeNode
-        {
-            /// <summary>
-            /// The node.
-            /// </summary>
-            public Node<int> Node { get; set; }
-
-            /// <summary>
-            /// Each node in the tree contains a range which is used in a query.
-            /// </summary>
-            public Range<int> Range { get; set; }
-
-            public RangeNode()
-            {
-                Node = new Node<int>();
-                Range = new Range<int>(-1, -1);
-            }
-
-            /// <summary>
-            /// Presents the Range in readable format
-            /// </summary>
-            /// <returns>String representation of the Range</returns>
-            public override string ToString()
-            {
-                return String.Format("{0}: {1}",
-                    (Node == null) ? "null" : Node.ToString(),
-                    (Range == null) ? "null" : Range.ToString());
-            }
-        }
-
-        #endregion
-
         private List<int> leafNodes;
         private RangeNode[] tree;
 
@@ -79,22 +42,26 @@ namespace SegmentTree
         /// <param name="value">The new value for the node.</param>
         public void UpdateNode(int node, int value)
         {
-            UpdateNode(node, 1, value);
+            int rootNode = 1;
+            UpdateNode(node, rootNode, value);
         }
 
         private void UpdateNode(int node, int currentNode, int value)
         {
+            // Nothing to do if the current node is not part of the tree.
             if (currentNode < 0 || currentNode >= tree.Length)
             {
                 return;
             }
 
+            // If the given node is within the current node's range, update the value.
             if (tree[currentNode].Range.ContainsValue(node))
             {
                 int diff = leafNodes[node] - value;
                 tree[currentNode].Node.Value -= diff;
             }
 
+            // Update the values of the child nodes.
             UpdateNode(node, Left(currentNode), value);
             UpdateNode(node, Right(currentNode), value);
         }
